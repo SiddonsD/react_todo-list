@@ -14,12 +14,25 @@ function App() {
       isCompleted: false,
     },{
       text: "Build a really cool todo app",
-      isCompleted: false;
+      isCompleted: false,
     }
   ]);
 
   const addTodo = (text) => {
-    const newTodos = [...todoItems, text];
+    const newTodos = [...todos, { text }];
+    setTodos(newTodos);
+  };
+
+  const completeTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = true;
+    setTodos(newTodos);
+  };
+
+  // deleting todos
+  const removeTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
     setTodos(newTodos);
   };
 
@@ -27,7 +40,13 @@ function App() {
     <div className='app'>
       <h1 className='todo-list'>My todo list</h1>
       {todos.map((todo, index) => (
-        <TodoItem text={todo} key={index} />
+        <TodoItem 
+        todo={todo} 
+        key={index} 
+        index={index} 
+        completeTodo={completeTodo}
+        removeTodo={removeTodo}
+        />
       ))}
       <TodoForm addTodo={addTodo} />
     </div>
